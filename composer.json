@@ -1,0 +1,34 @@
+{
+    "name": "rezzza/flickr-bundle",
+    "description": "Flickr api wrapper",
+    "type": "symfony-bundle",
+    "keywords": ["flickr", "bundle"],
+    "homepage": "https://github.com/rezzza/FlickrBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Community contributors",
+            "homepage": "https://github.com/rezzza/FlickrBundle/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "2.*",
+        "rezzza/flickr": "1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Rezzza\\FlickrBundle": ""
+        }
+    },
+    "target-dir": "rezzza/FlickrBundle",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}
