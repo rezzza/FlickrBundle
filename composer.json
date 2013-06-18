@@ -21,7 +21,7 @@
             "Rezzza\\FlickrBundle": ""
         }
     },
-    "target-dir": "rezzza/FlickrBundle",
+    "target-dir": "Rezzza/FlickrBundle",
     "config": {
         "bin-dir": "bin"
     },
