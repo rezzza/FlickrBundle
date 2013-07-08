@@ -2,6 +2,7 @@
 
 namespace Rezzza\FlickrBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,7 +24,39 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
 
         $rootNode = $treeBuilder->root('rezzza_flickr');
+        $rootNode = $this->validateRootNode($rootNode);
 
+        $rootNode
+            ->children()
+                ->scalarNode('key')->end()
+                ->scalarNode('secret')->end()
+                ->scalarNode('http_adapter')->defaultValue('Rezzza\Flickr\Http\GuzzleAdapter')->end()
+                ->scalarNode('default_client')->defaultValue('default')->end()
+                ->arrayNode('clients')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('key')->isRequired()->end()
+                            ->scalarNode('secret')->isRequired()->end()
+                            ->scalarNode('http_adapter')->defaultValue('Rezzza\Flickr\Http\GuzzleAdapter')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $treeBuilder;
+    }
+
+    /**
+     * validateRootNode 
+     *
+     * @param NodeParentInterface $rootNode rootNode
+     * 
+     * @return NodeParentInteface
+     */
+    public function validateRootNode(NodeParentInterface $rootNode)
+    {
         $rootNode
             ->beforeNormalization()
                 ->ifTrue(function($v) {
@@ -56,27 +89,9 @@ class Configuration implements ConfigurationInterface
                 ->ifTrue(function($v) {
                     return !isset($v['clients'][$v['default_client']]);
                 })
-                ->thenInvalid("Default client you've defined is not exists.")
-            ->end()
-            ->children()
-                ->scalarNode('key')->end()
-                ->scalarNode('secret')->end()
-                ->scalarNode('http_adapter')->defaultValue('Rezzza\Flickr\Http\GuzzleAdapter')->end()
-                ->scalarNode('default_client')->defaultValue('default')->end()
-                ->arrayNode('clients')
-                    ->useAttributeAsKey('name')
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('key')->isRequired()->end()
-                            ->scalarNode('secret')->isRequired()->end()
-                            ->scalarNode('http_adapter')->defaultValue('Rezzza\Flickr\Http\GuzzleAdapter')->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
+                ->thenInvalid(sprintf("The default client you've defined ('%s') does not exists.", $v['default_client']))
+            ->end();
 
-        return $treeBuilder;
+        return $rootNode;
     }
-
 }
