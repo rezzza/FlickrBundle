@@ -3,6 +3,7 @@
 namespace Rezzza\FlickrBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder;
+use Symfony\Component\Config\Definition\Builder\NodeParentInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -49,10 +50,10 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * validateRootNode 
+     * validateRootNode
      *
      * @param NodeParentInterface $rootNode rootNode
-     * 
+     *
      * @return NodeParentInteface
      */
     public function validateRootNode(NodeParentInterface $rootNode)
