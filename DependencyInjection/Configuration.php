@@ -90,7 +90,7 @@ class Configuration implements ConfigurationInterface
                 ->ifTrue(function($v) {
                     return !isset($v['clients'][$v['default_client']]);
                 })
-                ->thenInvalid(sprintf("The default client you've defined ('%s') does not exists.", $v['default_client']))
+                ->thenInvalid("The default client you've defined ('%s') does not exists.")
             ->end();
 
         return $rootNode;
