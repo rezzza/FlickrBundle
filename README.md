@@ -3,7 +3,7 @@ FlickrBundle
 
 A simple wrapper for flickr api.
 
-```
+```yaml
 rezzza_flickr:
     key: 'my api key'
     secret: 'my api secret'
